@@ -2,11 +2,18 @@
 
 class View {
 
-	function render($controller, $view) {
+  public $parametros;
 
-		$controller = get_class($controller);
-		require './views/' . $controller . '/'. $view . '.php';
-		
+  public function setParametros($parametros = null){
+    if(!is_null($parametros)){
+      $this->parametros = $parametros;
+    }
+  }
+
+  function render($folder, $view, $info = null) {
+
+		require './views/' . $folder . '/'. $view . '.php';
+
 	}
 }
 

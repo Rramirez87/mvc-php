@@ -6,7 +6,7 @@ class Conection {
 
 	public function __construct() {
 
-        $init = require "./config/database.php";
+    $init = require "./config/database.php";
 
 		$host = $init['hostName'];
 		$name = $init['DbName'];
@@ -21,14 +21,14 @@ class Conection {
 		}
 	}
 
-	function __destruct() {
+	public function __destruct() {
 
 		$thread_id = $this->link->thread_id;
 		$this->link->kill($thread_id);
 		$this->link->close();
 	}
 
-	function select($attr,$table,$where = '',$order = '') {
+	public function select($attr,$table,$where = '',$order = '') {
 
 		$response = array();
 		$where = ($where != '' ||  $where != null) ? "WHERE ".$where : '';
@@ -36,15 +36,14 @@ class Conection {
 		$stmt = "SELECT ".$attr." FROM ".$table." ".$where. " ".$order.";";
 		$result = $this->link->query($stmt) or die($this->link->error.__LINE__);
 		if($result->num_rows > 0) {
-                    while($row = $result->fetch_assoc()){
-                        $response[] = $row;
-
-                    }
-                    return $response;
+      while($row = $result->fetch_assoc()){
+        $response[] = $row;
+      }
+      return $response;
 		}
 	}
 
-	function selectTest($attr,$table,$where = '') {
+	 public function selectTest($attr,$table,$where = '') {
 
 		$response = array();
 		$where = ($where != '' ||  $where != null) ? "WHERE ".$where : '';
@@ -56,11 +55,10 @@ class Conection {
 			$response['estado'] = true;
 			$response['contador'] = $result->num_rows;
 			$response['datos'] = array();
-                    while($row = $result->fetch_object()){//$result->fetch_object()
-                        $response['datos'][] = $row;
-
-                    }
-                    return $response;
+      while($row = $result->fetch_object()){//$result->fetch_object()
+        $response['datos'][] = $row;
+      }
+      return $response;
 		}else {
 			$response['estado']   = false;
 			$response['contador'] = 0;
@@ -70,10 +68,10 @@ class Conection {
 		}
 	}
 
-	function insert($table,$values,$where = '',$sanear = false) {
+	public function insert($table,$values,$where = '',$sanear = false) {
 
-        $columnas = null;
-        $valores = null;
+    $columnas = null;
+    $valores = null;
 
 		foreach ($values as $key => $value) {
 			$columnas.=$key.',';
@@ -91,25 +89,25 @@ class Conection {
 
 		$stmt = "INSERT INTO ".$table." (".$columnas.") VALUES(".$valores.") ".$where.";";
 
-        $resultado = $this->link->query($stmt); //or die($this->link->error);
+    $resultado = $this->link->query($stmt); //or die($this->link->error);
 
-        if(!$resultado){
-        	$mensaje_error = $this->link->error;
-        	error_log("Se produjo el siguiente error: ". $mensaje_error);
-        	$array[] = "error";
-        	return $array;
-        }else{
-	        $id = $this->link->insert_id;
-	        $array[] = "true";
-	        $array[] = $id;
+    if(!$resultado){
+    	$mensaje_error = $this->link->error;
+    	error_log("Se produjo el siguiente error: ". $mensaje_error);
+    	$array[] = "error";
+    	return $array;
+    }else{
+      $id = $this->link->insert_id;
+      $array[] = "true";
+      $array[] = $id;
 
 			return $array;
-        }
+    }
 	}
 
 
-	function update($table,$values,$where) {
-        $valores = null;
+	public function update($table,$values,$where) {
+    $valores = null;
 		foreach ($values as $key => $value) {
 			$valores .= $key.'="'.utf8_decode($value).'",';
 		}
@@ -122,7 +120,7 @@ class Conection {
 		return $response;
 	}
 
-	function delete($table,$values,$complex = false) {
+	public function delete($table,$values,$complex = false) {
 
 		if($complex){ $where = $values; }else{
 			foreach ($values as $key => $value) {
@@ -135,7 +133,7 @@ class Conection {
 		return $result;
 	}
 
-	function check($what,$table,$values,$complex = false) {
+	public function check($what,$table,$values,$complex = false) {
 
 		if($complex){ $where = $values; }else{
 			foreach ($values as $key => $value) {

@@ -17,7 +17,7 @@ class Session {
 	static function getValue($clave) {
 
 		return isset($_SESSION[$clave]) ? $_SESSION[$clave] : false;
-	
+
 	}
 
 	static function setValue($clave, $valor) {
@@ -35,7 +35,7 @@ class Session {
 		}else {
 
 			die("SESSION[$clave] no exsite!");
-		
+
 		}
 
 	}
@@ -54,9 +54,9 @@ class Session {
         $dias = array('', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo');
         $meses = array('', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
         $fechaFormato = $dias[$n_dia].' '.date('d').' de '.$meses[$n_mes].' de '.date('Y');
-        
-        $_SESSION['fecha'] = $fechaFormato;
-        
-    }    
+
+      echo $fechaFormato;
+
+    }
 }
 ?>

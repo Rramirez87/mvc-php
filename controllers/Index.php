@@ -10,7 +10,9 @@ class Index extends Controller {
 
 	public function index() {
 
-		$this->view->render($this, 'index');
+    $this->view->render('Includ','header');
+		$this->view->render('Index','index');
+    $this->view->render('Includ','footer');
 
 	}
 

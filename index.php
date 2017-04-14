@@ -55,7 +55,9 @@ if(file_exists($ruta)){
 		}
 	}
 }else{
-	die("Error URL");
+  $error = new _Error();
+  $info = 'La ruta no existe';
+  $error->error($info);
 }
 
 ?>
